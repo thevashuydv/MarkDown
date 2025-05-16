@@ -434,135 +434,138 @@ export function MarkdownEditor() {
       )}
 
       <div className="flex flex-col md:flex-row gap-0 h-[calc(100vh-16rem)] relative">
-        {/* Editor Section */}
-        <motion.div
-          className={`flex flex-col ${isMobile && showPreview ? 'hidden' : 'flex'}`}
-          style={{ flex: `0 0 ${split}%`, minWidth: 0 }}
-          variants={slideUpVariant}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Editor</h2>
-            <div className="flex gap-2 items-center">
-              <label className="px-2 py-1 rounded text-xs border border-border bg-background text-primary hover:bg-muted transition-colors cursor-pointer">
-                Upload Image
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleFileInput}
+        {/* Add horizontal gap for desktop */}
+        <div className="flex flex-1 flex-col md:flex-row gap-0 md:gap-x-8 h-full w-full">
+          {/* Editor Section */}
+          <motion.div
+            className={`flex flex-col ${isMobile && showPreview ? 'hidden' : 'flex'}`}
+            style={{ flex: `0 0 ${split}%`, minWidth: 0 }}
+            variants={slideUpVariant}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">Editor</h2>
+              <div className="flex gap-2 items-center">
+                <label className="px-2 py-1 rounded text-xs border border-border bg-background text-primary hover:bg-muted transition-colors cursor-pointer">
+                  Upload Image
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileInput}
+                  />
+                </label>
+                {isMobile && (
+                  <button
+                    onClick={() => setShowPreview(true)}
+                    className="text-sm text-primary hover:underline"
+                  >
+                    Show Preview
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div
+              className="flex-1 relative"
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+            >
+              <textarea
+                ref={textareaRef}
+                value={markdown}
+                onChange={(e) => setMarkdown(e.target.value)}
+                className="w-full h-full p-6 bg-card text-card-foreground rounded-lg border border-border resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 font-['JetBrains_Mono'] text-sm leading-relaxed"
+                placeholder="Type your markdown here..."
+                spellCheck="false"
+              />
+              <div className="absolute bottom-6 right-6">
+                <WordCounter text={markdown} />
+              </div>
+            </div>
+            {/* Inline image preview */}
+            {imagePreview && (
+              <div className="mt-4 flex justify-center">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="max-h-40 rounded border border-border shadow"
+                  style={{ maxWidth: '100%' }}
                 />
-              </label>
+              </div>
+            )}
+          </motion.div>
+
+          {/* Split Pane Divider */}
+          <div
+            className="w-2 cursor-col-resize bg-border hover:bg-primary/20 transition-colors z-10"
+            style={{ touchAction: 'none', userSelect: 'none', display: isMobile ? 'none' : 'block' }}
+            onMouseDown={startDrag}
+            onTouchStart={startDrag}
+          />
+
+          {/* Preview Section */}
+          <motion.div
+            className={`flex flex-col ${isMobile && showPreview ? 'hidden' : 'flex'}`}
+            style={{ flex: `0 0 ${split}%`, minWidth: 0 }}
+            variants={slideUpVariant}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">Preview</h2>
               {isMobile && (
                 <button
-                  onClick={() => setShowPreview(true)}
+                  onClick={() => setShowPreview(false)}
                   className="text-sm text-primary hover:underline"
                 >
-                  Show Preview
+                  Show Editor
                 </button>
               )}
             </div>
-          </div>
 
-          <div
-            className="flex-1 relative"
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-          >
-            <textarea
-              ref={textareaRef}
-              value={markdown}
-              onChange={(e) => setMarkdown(e.target.value)}
-              className="w-full h-full p-6 bg-card text-card-foreground rounded-lg border border-border resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 font-['JetBrains_Mono'] text-sm leading-relaxed"
-              placeholder="Type your markdown here..."
-              spellCheck="false"
-            />
-            <div className="absolute bottom-6 right-6">
-              <WordCounter text={markdown} />
-            </div>
-          </div>
-          {/* Inline image preview */}
-          {imagePreview && (
-            <div className="mt-4 flex justify-center">
-              <img
-                src={imagePreview}
-                alt="Preview"
-                className="max-h-40 rounded border border-border shadow"
-                style={{ maxWidth: '100%' }}
-              />
-            </div>
-          )}
-        </motion.div>
-
-        {/* Split Pane Divider */}
-        <div
-          className="w-2 cursor-col-resize bg-border hover:bg-primary/20 transition-colors z-10"
-          style={{ touchAction: 'none', userSelect: 'none', display: isMobile ? 'none' : 'block' }}
-          onMouseDown={startDrag}
-          onTouchStart={startDrag}
-        />
-
-        {/* Preview Section */}
-        <motion.div
-          className={`flex flex-col ${isMobile && !showPreview ? 'hidden' : 'flex'}`}
-          style={{ flex: `0 0 ${100 - split}%`, minWidth: 0 }}
-          variants={slideUpVariant}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Preview</h2>
-            {isMobile && (
-              <button
-                onClick={() => setShowPreview(false)}
-                className="text-sm text-primary hover:underline"
-              >
-                Show Editor
-              </button>
-            )}
-          </div>
-
-          <div className="flex-1 overflow-auto p-8 bg-card text-card-foreground rounded-lg border border-border">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                root: ({ children }) => (
-                  <div className="prose prose-sm sm:prose max-w-none">
-                    {children}
-                  </div>
-                ),
-                code({node, inline, className, children, ...props}) {
-                  const match = /language-(\w+)/.exec(className || '');
-                  return !inline && match ? (
-                    <SyntaxHighlighter
-                      style={vscDarkPlus}
-                      language={match[1]}
-                      PreTag="div"
-                      {...props}
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
-                  ) : (
-                    <code className={className} {...props}>
+            <div className="flex-1 overflow-auto p-8 bg-card text-card-foreground rounded-lg border border-border">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  root: ({ children }) => (
+                    <div className="prose prose-sm sm:prose max-w-none">
                       {children}
-                    </code>
-                  );
-                },
-                img({src, alt, ...props}) {
-                  // Replace placeholder with actual image data URL if available
-                  const realSrc = imageMap[src] || src;
-                  return (
-                    <img
-                      src={realSrc}
-                      alt={alt}
-                      {...props}
-                      style={{ maxWidth: '100%', borderRadius: '0.5rem', border: '1px solid var(--border)' }}
-                    />
-                  );
-                }
-              }}
-            >
-              {markdown}
-            </ReactMarkdown>
-          </div>
-        </motion.div>
+                    </div>
+                  ),
+                  code({node, inline, className, children, ...props}) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        style={vscDarkPlus}
+                        language={match[1]}
+                        PreTag="div"
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                  img({src, alt, ...props}) {
+                    // Replace placeholder with actual image data URL if available
+                    const realSrc = imageMap[src] || src;
+                    return (
+                      <img
+                        src={realSrc}
+                        alt={alt}
+                        {...props}
+                        style={{ maxWidth: '100%', borderRadius: '0.5rem', border: '1px solid var(--border)' }}
+                      />
+                    );
+                  }
+                }}
+              >
+                {markdown}
+              </ReactMarkdown>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
