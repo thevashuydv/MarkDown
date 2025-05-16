@@ -1,0 +1,179 @@
+/* Prose styles for markdown */
+.prose {
+  max-width: 65ch;
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.prose strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.prose h1 {
+  color: var(--foreground);
+  font-weight: 800;
+  font-size: 2.25em;
+  margin-top: 0;
+  margin-bottom: 0.8888889em;
+  line-height: 1.1111111;
+}
+
+.prose h2 {
+  color: var(--foreground);
+  font-weight: 700;
+  font-size: 1.5em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  line-height: 1.3333333;
+}
+
+.prose h3 {
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 1.25em;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  line-height: 1.6;
+}
+
+.prose h4 {
+  color: var(--foreground);
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.5;
+}
+
+.prose blockquote {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--foreground);
+  border-left-width: 0.25rem;
+  border-left-color: var(--border);
+  quotes: "\201C""\201D""\2018""\2019";
+  margin-top: 1.6em;
+  margin-bottom: 1.6em;
+  padding-left: 1em;
+}
+
+.prose ul {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  list-style-type: disc;
+  padding-left: 1.625em;
+}
+
+.prose ol {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  list-style-type: decimal;
+  padding-left: 1.625em;
+}
+
+.prose code {
+  color: var(--foreground);
+  font-weight: 500;
+  font-size: 0.875em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.prose code::before,
+.prose code::after {
+  content: "\`";
+}
+
+.prose pre {
+  color: var(--card-foreground);
+  background-color: var(--card);
+  overflow-x: auto;
+  font-weight: 400;
+  font-size: 0.875em;
+  line-height: 1.7142857;
+  margin-top: 1.7142857em;
+  margin-bottom: 1.7142857em;
+  border-radius: 0.375rem;
+  padding: 0.8571429em 1.1428571em;
+}
+
+.prose pre code {
+  background-color: transparent;
+  border-width: 0;
+  border-radius: 0;
+  padding: 0;
+  font-weight: 400;
+  color: inherit;
+  font-size: inherit;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.6;
+}
+
+.prose pre code::before,
+.prose pre code::after {
+  content: none;
+}
+
+.prose table {
+  width: 100%;
+  table-layout: auto;
+  text-align: left;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: 0.875em;
+  line-height: 1.7142857;
+}
+
+.prose thead {
+  color: var(--foreground);
+  font-weight: 600;
+  border-bottom-width: 1px;
+  border-bottom-color: var(--border);
+}
+
+.prose thead th {
+  vertical-align: bottom;
+  padding-right: 0.5714286em;
+  padding-bottom: 0.5714286em;
+  padding-left: 0.5714286em;
+}
+
+.prose tbody tr {
+  border-bottom-width: 1px;
+  border-bottom-color: var(--border);
+}
+
+.prose tbody tr:last-child {
+  border-bottom-width: 0;
+}
+
+.prose tbody td {
+  vertical-align: top;
+  padding: 0.5714286em;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--card);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
