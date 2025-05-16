@@ -34,7 +34,6 @@ export function Navbar() {
             <Github size={18} />
             <span className="hidden sm:inline">GitHub</span>
           </motion.a>
-
           <ThemeToggle />
         </div>
       </div>
