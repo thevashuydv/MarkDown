@@ -24,7 +24,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-4">
           <motion.a
-            href="https://github.com"
+            href="https://github.com/thevashuydv/MarkDown"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors"
